@@ -10,7 +10,13 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>common</module>
         <module>eureka</module>
+        <module>client-service</module>
+        <module>gateway</module>
+        <module>ribbon</module>
+        <module>hystrix</module>
+        <module>config</module>
     </modules>
 
     <parent>
