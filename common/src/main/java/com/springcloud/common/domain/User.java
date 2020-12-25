@@ -1,4 +1,4 @@
-package com.springcloud.domain;
+package com.springcloud.common.domain;
 
 public class User {
 
@@ -6,7 +6,8 @@ public class User {
     private String username;
     private String password;
 
-    public User(){}
+    public User() {
+    }
 
     public User(Long id, String username, String password) {
         this.id = id;

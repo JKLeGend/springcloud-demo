@@ -1,6 +1,6 @@
 package com.springcloud.service;
 
-import com.springcloud.domain.User;
+import com.springcloud.common.domain.User;
 
 import java.util.List;
 

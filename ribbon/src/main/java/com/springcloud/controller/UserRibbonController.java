@@ -2,7 +2,7 @@ package com.springcloud.controller;
 
 import com.springcloud.common.api.CommonResult;
 import com.springcloud.common.api.ResultCode;
-import com.springcloud.domain.User;
+import com.springcloud.common.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;

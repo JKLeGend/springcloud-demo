@@ -1,7 +1,7 @@
 package com.springcloud.controller;
 
-import com.springcloud.domain.CommonResult;
-import com.springcloud.domain.User;
+import com.springcloud.common.api.CommonResult;
+import com.springcloud.common.domain.User;
 import com.springcloud.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,38 +22,38 @@ public class UserController {
     @PostMapping("/create")
     public CommonResult create(@RequestBody User user) {
         userService.create(user);
-        return new CommonResult("操作成功", 200);
+        return CommonResult.success(null, "操作成功");
     }
 
     @GetMapping("/{id}")
     public CommonResult<User> getUser(@PathVariable Long id) {
         User user = userService.getUser(id);
         LOGGER.info("根据id获取用户信息，用户名称为：{}",user.getUsername());
-        return new CommonResult<>(user);
+        return CommonResult.success(user);
     }
 
     @GetMapping("/getUserByIds")
     public CommonResult<List<User>> getUserByIds(@RequestParam List<Long> ids) {
         List<User> userList= userService.getUserByIds(ids);
         LOGGER.info("根据ids获取用户信息，用户列表为：{}",userList);
-        return new CommonResult<>(userList);
+        return CommonResult.success(userList);
     }
 
     @GetMapping("/getByUsername")
     public CommonResult<User> getByUsername(@RequestParam String username) {
         User user = userService.getByUsername(username);
-        return new CommonResult<>(user);
+        return CommonResult.success(user);
     }
 
     @PostMapping("/update")
     public CommonResult update(@RequestBody User user) {
         userService.update(user);
-        return new CommonResult("操作成功", 200);
+        return CommonResult.success(null, "操作成功");
     }
 
     @PostMapping("/delete/{id}")
     public CommonResult delete(@PathVariable Long id) {
         userService.delete(id);
-        return new CommonResult("操作成功", 200);
+        return CommonResult.success(null, "操作成功");
     }
 }

@@ -1,6 +1,6 @@
 package com.springcloud.service.impl;
 
-import com.springcloud.domain.User;
+import com.springcloud.common.domain.User;
 import com.springcloud.service.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
