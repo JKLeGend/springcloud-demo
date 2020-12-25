@@ -1,0 +1,12 @@
+server:
+  port: 9001
+service-url:
+  client-service: http://localhost:8002
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: remoteaddr_route
+          uri: ${service-url.client-service}
+          predicates:
+            - RemoteAddr=192.168.6.107/24

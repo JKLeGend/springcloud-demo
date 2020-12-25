@@ -1,0 +1,12 @@
+server:
+  port: 9001
+service-url:
+  client-service: http://localhost:8002
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: path_route
+          uri: ${service-url.client-service}/user/{id}
+          predicates:
+            - Path=/user/{id}
