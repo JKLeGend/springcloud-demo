@@ -1,0 +1,14 @@
+server:
+  port: 4002
+spring:
+  application:
+    name: ribbon
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:4001/eureka/
+service-url:
+  client-service: http://client-service
