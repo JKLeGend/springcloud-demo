@@ -41,3 +41,22 @@ docker run -d \
   -v "/$(pwd)/resources/grafana/grafana-storage:/var/lib/grafana" \
   grafana/grafana
 ```
+- skywalking: [http://localhost:13800](http://localhost:13800)
+```
+docker pull apache/skywalking-oap-server
+docker run \
+  -p 11800:11800 \
+  -p 12800:12800 \
+  --name skywalking-oap-server \
+  --restart always \
+  apache/skywalking-oap-server
+
+docker pull apache/skywalking-ui
+docker run \
+  -p 13800:8080 \
+  --name skywalking-ui \
+  --restart always \
+  --link skywalking-oap-server \
+  -e SW_OAP_ADDRESS=skywalking-oap-server:12800 \
+  apache/skywalking-ui
+```
