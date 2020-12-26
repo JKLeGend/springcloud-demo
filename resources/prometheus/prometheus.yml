@@ -32,6 +32,6 @@ scrape_configs:
     metrics_path: '/actuator/prometheus'
     consul_sd_configs:
     #consul 地址
-    - server: 'host.docker.internal:4001'
+    - server: 'host.docker.internal:8001'
       scheme: http
       services: [CLIENT-SERVICE]
