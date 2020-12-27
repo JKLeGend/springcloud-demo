@@ -33,6 +33,8 @@ COMPOSE_HTTP_TIMEOUT=300 docker-compose up
 ### 测试
 - eureka服务器地址: [http://localhost:8001](http://localhost:8001)
 - 测试api请求地址: [http://localhost:9001](http://localhost:9001)
+- prometheus服务地址: [http://localhost:9090/classic/targets](http://localhost:9090/classic/targets)
+- grafana服务地址: [http://localhost:9099/](http://localhost:9099/)
 
 ### 搭建步骤
 > Docker环境部署

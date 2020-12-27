@@ -110,3 +110,19 @@ services:
       config:
         condition: service_healthy
     restart: always
+  prometheus:
+    container_name: springcloud-demo-prometheus
+    image: prom/prometheus
+    ports:
+      - 9090:9090
+    volumes:
+      - ./resources/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    restart: always
+  grafana:
+    container_name: springcloud-demo-grafana
+    image: grafana/grafana
+    ports:
+      - 9099:3000
+    volumes:
+      - ./resources/grafana/grafana-storage:/var/lib/grafana
+    restart: always
