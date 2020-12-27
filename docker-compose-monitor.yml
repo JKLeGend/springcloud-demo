@@ -1,0 +1,104 @@
+version: '2.1'
+services:
+  eureka:
+    container_name: springcloud-demo-eureka
+    image: springcloud-demo/eureka
+    build:
+      context: ./eureka
+      dockerfile: Dockerfile
+    ports:
+      - 8001:8001
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "eureka:8001"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+  config:
+    container_name: springcloud-demo-config
+    image: springcloud-demo/config
+    build:
+      context: ./config
+      dockerfile: Dockerfile
+    ports:
+      - 8004:8004
+    environment:
+      SPRING_PROFILES_ACTIVE: native
+      EUREKA_URL: http://eureka:8001/eureka/
+    depends_on:
+      eureka:
+        condition: service_healthy
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "config:8004/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+  client-service:
+    container_name: springcloud-demo-client-service
+    image: springcloud-demo/client-service
+    build:
+      context: ./client-service
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      EUREKA_URL: http://eureka:8001/eureka/
+      SW_AGENT_COLLECTOR_BACKEND_SERVICES: skywalking-oap-server:11800
+    depends_on:
+      eureka:
+        condition: service_healthy
+      config:
+        condition: service_healthy
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "client-service:8000/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+  prometheus:
+    container_name: springcloud-demo-prometheus
+    image: prom/prometheus
+    ports:
+      - 9090:9090
+    volumes:
+      - ./resources/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    restart: always
+    depends_on:
+      client-service:
+        condition: service_healthy
+  grafana:
+    container_name: springcloud-demo-grafana
+    image: grafana/grafana
+    ports:
+      - 9099:3000
+    volumes:
+      - ./resources/grafana/grafana-storage:/var/lib/grafana
+    restart: always
+    depends_on:
+      client-service:
+        condition: service_healthy
+  skywalking-oap-server:
+    container_name: skywalking-oap-server
+    image: apache/skywalking-oap-server
+    ports:
+      - 11800:11800
+      - 12800:12800
+    restart: always
+    depends_on:
+      client-service:
+        condition: service_healthy
+  skywalking-ui:
+    container_name: skywalking-ui
+    image: apache/skywalking-ui
+    ports:
+      - 13800:8080
+    environment:
+      SW_OAP_ADDRESS: skywalking-oap-server:12800
+    depends_on:
+      - skywalking-oap-server
+    restart: always
+    depends_on:
+      client-service:
+        condition: service_healthy

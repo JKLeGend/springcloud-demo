@@ -35,6 +35,7 @@ COMPOSE_HTTP_TIMEOUT=300 docker-compose up
 - 测试api请求地址: [http://localhost:9001](http://localhost:9001)
 - prometheus服务地址: [http://localhost:9090/classic/targets](http://localhost:9090/classic/targets)
 - grafana服务地址: [http://localhost:9099/](http://localhost:9099/)
+- skywalking服务地址: [http://localhost:13800/](http://localhost:13800/)
 
 ### 搭建步骤
 > Docker环境部署
