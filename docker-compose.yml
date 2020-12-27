@@ -1,0 +1,112 @@
+version: '2.1'
+services:
+  eureka:
+    container_name: springcloud-demo-eureka
+    image: springcloud-demo/eureka
+    build:
+      context: ./eureka
+      dockerfile: Dockerfile
+    ports:
+      - 8001:8001
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "eureka:8001"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+  config:
+    container_name: springcloud-demo-config
+    image: springcloud-demo/config
+    build:
+      context: ./config
+      dockerfile: Dockerfile
+    ports:
+      - 8004:8004
+    environment:
+      SPRING_PROFILES_ACTIVE: native
+      EUREKA_URL: http://eureka:8001/eureka/
+    depends_on:
+      eureka:
+        condition: service_healthy
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "config:8004/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+  gateway:
+    container_name: springcloud-demo-gateway
+    image: springcloud-demo/gateway
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+    ports:
+      - 9001:9001
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      EUREKA_URL: http://eureka:8001/eureka/
+      RIBBON_URL: http://ribbon:8002
+    depends_on:
+      eureka:
+        condition: service_healthy
+      config:
+        condition: service_healthy
+      ribbon:
+        condition: service_healthy
+    restart: always
+  client-service:
+    container_name: springcloud-demo-client-service
+    image: springcloud-demo/client-service
+    build:
+      context: ./client-service
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      EUREKA_URL: http://eureka:8001/eureka/
+    depends_on:
+      eureka:
+        condition: service_healthy
+      config:
+        condition: service_healthy
+    restart: always
+  ribbon:
+    container_name: springcloud-demo-ribbon
+    image: springcloud-demo/ribbon
+    build:
+      context: ./ribbon
+      dockerfile: Dockerfile
+    ports:
+      - 8002:8002
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      EUREKA_URL: http://eureka:8001/eureka/
+    depends_on:
+      eureka:
+        condition: service_healthy
+      config:
+        condition: service_healthy
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "ribbon:8002/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+  hystrix:
+    container_name: springcloud-demo-hystrix
+    image: springcloud-demo/hystrix
+    build:
+      context: ./hystrix
+      dockerfile: Dockerfile
+    ports:
+      - 8003:8003
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      EUREKA_URL: http://eureka:8001/eureka/
+    depends_on:
+      eureka:
+        condition: service_healthy
+      config:
+        condition: service_healthy
+    restart: always

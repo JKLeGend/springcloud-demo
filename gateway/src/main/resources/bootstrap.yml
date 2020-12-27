@@ -1,6 +1,6 @@
-server:
-  port: 8004
 eureka:
   client:
+    register-with-eureka: true
+    fetch-registry: true
     service-url:
       defaultZone: ${EUREKA_URL:http://localhost:8001/eureka/}

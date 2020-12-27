@@ -5,4 +5,4 @@ spring:
     name: ribbon
 
 service-url:
-  client-service: http://client-service
+  client-service: http://hystrix

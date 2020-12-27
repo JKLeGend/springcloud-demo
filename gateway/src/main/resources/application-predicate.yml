@@ -1,7 +1,7 @@
 server:
   port: 9001
 service-url:
-  client-service: http://localhost:8002
+  client-service: ${RIBBON_URL:http://localhost:8002}
 spring:
   cloud:
     gateway:

@@ -1,4 +1,5 @@
-# This is a SpringCloud demo with SkyWalking and Prometheus;
+# Welcome!
+## This is a SpringCloud demo with SkyWalking and Prometheus;
 
 ## 简介
 
@@ -20,6 +21,18 @@ springcloud-demo
 ├── ribbon -- 负载均衡服务
 └── hystrix -- 服务降级与熔断服务
 ```
+### 编译
+```
+mvn clean install -DskipTests
+```
+### 运行
+> 请确保本机端口8000,8001,8002,8003,8004,9001未被占用;
+```
+COMPOSE_HTTP_TIMEOUT=300 docker-compose up
+```
+### 测试
+- eureka服务器地址: [http://localhost:8001](http://localhost:8001)
+- 测试api请求地址: [http://localhost:9001](http://localhost:9001)
 
 ### 搭建步骤
 > Docker环境部署

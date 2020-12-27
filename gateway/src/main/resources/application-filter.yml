@@ -5,7 +5,7 @@ spring:
     gateway:
       routes:
         - id: retry_route
-          uri: http://localhost:8002
+          uri: ${RIBBON_URL:http://localhost:8002}
           predicates:
             - Method=GET
           filters:
