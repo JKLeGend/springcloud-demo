@@ -7,7 +7,7 @@ demo基于Spring Cloud Greenwich, 集成了springcloud大部分核心组件, 包
 
 ## 项目结构
 
-![系统架构图](micro_service_arch.jpg)
+![系统架构图](SOA-MS-SPRINGCLOUD.png)
 
 ## 项目结构
 
