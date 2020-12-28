@@ -26,8 +26,8 @@ springcloud-demo
 ```
 mvn clean install -DskipTests
 ```
-### 运行
-> 请确保本机端口8000,8001,8002,8003,8004,9001未被占用;
+### 本地运行
+> 请确保本机端口8000,8001,8002,8003,8004,9001,9090,9099,11800,12800,13800未被占用;
 ```
 COMPOSE_HTTP_TIMEOUT=500 docker-compose up
 COMPOSE_HTTP_TIMEOUT=500 docker-compose -f docker-compose-monitor.yml up
