@@ -17,4 +17,5 @@ target/
 /build/
 
 resources/images
+resources/grafana/grafana-storage/
 resources/.DS_Store
